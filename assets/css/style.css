@@ -1,0 +1,56 @@
+#map {
+    height: 400px;
+    width:100%;
+   }
+
+.mainBody{
+    margin-bottom: 50px;
+}
+
+body{
+    background-image: url(http://www.tokkoro.com/picsup/471154-friends-background-wallpaper-free.jpeg);
+    background-size: cover;
+}
+
+.jumbotron{
+    background-image: url(https://upload.wikimedia.org/wikivoyage/en/thumb/9/95/ManhattanBanner5.jpg/1700px-ManhattanBanner5.jpg);
+    background-size: cover; 
+}
+
+#friendList{
+    background-image: url(https://img00.deviantart.net/0917/i/2010/331/7/9/background_by_random_god-d33qsld.jpg);
+    background-size: cover;
+    
+}
+
+#hangouts{
+    background-image: url(http://cdn.mntm.me/d4/d1/c6/Five-Off-the-Beaten-Track-Places-to-Play-in-LA-d4d1c658e5ed488f9f87e2c518a7c531.jpg);
+    background-size: cover;
+    
+}
+
+h3{
+ display: inline;
+ color: white;
+}
+
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+
+}
+
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+ }
