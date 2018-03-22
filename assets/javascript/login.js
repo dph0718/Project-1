@@ -9,19 +9,3 @@ var config = {
 firebase.initializeApp(config);
 
 
-function loginMeetPie() {
-    var googleProvider = new firebase.auth.GoogleAuthProvider();
-
-    firebase.auth().signInWithRedirect(googleProvider);
-    firebase.auth().getRedirectResult().then(function (result) {
-            console.log(result);
-            var user = result.user;
-        }).catch(function (error) {
-            console.log(error);
-        });
-
-}
-
-loginMeetPie();
-
-$("#google-button").on("click", loginGoogle);
