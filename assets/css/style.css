@@ -8,17 +8,27 @@
 }
 
 body{
-    background-image: url(http://www.tokkoro.com/picsup/471154-friends-background-wallpaper-free.jpeg);
+    background-image: url(https://previews.123rf.com/images/somegirl/somegirl1602/somegirl160200019/52916695-baking-background-with-sliced-cherry-pie-flour-rolling-pin-on-the-black-wooden-table-ingredients-for.jpg);
     background-size: cover;
 }
 
-.jumbotron{
+/* https://previews.123rf.com/images/somegirl/somegirl1602/somegirl160200019/52916695-baking-background-with-sliced-cherry-pie-flour-rolling-pin-on-the-black-wooden-table-ingredients-for.jpg
+http://www.tokkoro.com/picsup/471154-friends-background-wallpaper-free.jpeg */
+
+.frontJumbo{
     background-image: url(https://upload.wikimedia.org/wikivoyage/en/thumb/9/95/ManhattanBanner5.jpg/1700px-ManhattanBanner5.jpg);
     background-size: cover; 
 }
 
+.mainJumbo{
+    background-image: url(https://c1.staticflickr.com/3/2588/4159325073_ed9215815d_b.jpg);
+    background-size: cover; 
+}
+/* https://c1.staticflickr.com/3/2588/4159325073_ed9215815d_b.jpg 
+https://upload.wikimedia.org/wikivoyage/en/thumb/9/95/ManhattanBanner5.jpg/1700px-ManhattanBanner5.jpg*/
+
 #friendList{
-    background-image: url(https://img00.deviantart.net/0917/i/2010/331/7/9/background_by_random_god-d33qsld.jpg);
+    background-image: url(https://previews.123rf.com/images/catalby/catalby1703/catalby170300174/74636872-baking-background-with-empty-notebook-for-recipes-or-ingredients-list-on-a-black-table-with-flour-eg-Stock-Photo.jpg);
     background-size: cover;
     
 }
@@ -34,23 +44,14 @@ h3{
  color: white;
 }
 
-
-/* // Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
-    
+#login{
+    padding: 120px;
 }
 
-/* // Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
-
+h1{
+    font-size: 100px;
 }
 
-/* // Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
-
+#bottomSpace{
+ margin-bottom: 150px;
 }
-
-/* // Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-
- }

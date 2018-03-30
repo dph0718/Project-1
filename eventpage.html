@@ -5,24 +5,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
-  <title>Main Page</title>
+<title>Event</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/sass.js/0.6.3/sass.min.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
 
 </head>
 
 <body>
-    <div class="jumbotron jumbotron-fluid mb-0 mainJumbo" id="bottomSpace">
-        <div class="container">
-            <h1 class="text-white font-italic">MeetPie</h1>
-            <p class="text-white h2 font-italic bg-dark">Almost done. Just pick what type of place you'd like to meet up at and we'll do the rest of the work for you.
-              Enjoy your event and come back soon!
-            </p>
-        </div>
-    </div>
-  <div class="pos-f-t align-right">
+
+  <div class="pos-f-t align-right" id="bottomSpace">
     <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4 row">
         <h4 class="text-white border rounded p-2">
@@ -43,29 +37,49 @@
       </button>
     </nav>
   </div>
-
-  <div class="container mainBody">
-    <div class="groupName text-center p-3">
-      <h3 class="text-white bg-secondary border rounded p-2" id="eventName">Event Name</h3>
-      <h3 class="text-white bg-secondary border rounded p-2"type="time" id="eventTime">7:45 PM</h3>
-    </div>
-    <div class="row">
-      <div class="col-md-3 card my-1" id="friendList">
-        <h3 class="border rounded bg-dark text-center">Who's Going?</h3>
-        <div id="inviteList"></div>
+  <div class="container border rounded bg-secondary mt-5">
+    <form class="p-4">
+      <div class="form-group row">
+        <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Event Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control form-control-lg" id="eventName" placeholder="">
+        </div>
       </div>
-      <div class="col-md-6 container card my-1" id="map"></div>
+      <div class="form-group row float">
+        <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Meetup Time</label>
+        <div class="col-sm-4">
+          <input type="time" class="form-control form-control-lg" id="dateTime" placeholder="">
+        </div>
+        <label for="colFormLabelLg" class="col-sm-1 col-form-label col-form-label-lg">Date</label>
+        <div class="col-sm-5">
+            <input type="date" class="form-control form-control-lg" id="date" placeholder="">
+          </div>
+      </div>
+      <div class="form-row mb-3">
+        <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Who's Going</label>
+        <div class="col-auto">
+          <input type="text" class="form-control form-control-lg" id="groupMember" placeholder="group member">
+        </div>
+        <div class="col-auto">
+          <button id="addFriendList" type="submit" class="btn btn-primary rounded">Add Group Member</button>
+        </div>
+      </div>
+    </form>
+    <div class="mainBody m-5 row justify-content-md-center">
+      <div class="col-sm-3 card text-center p-5 m-2" id="friendList"> </div>
+      <div id="map" class="container card col-sm-8"></div>
       <!-- AIzaSyBu2PJgZJuNrCuoSEAjyZsM05WXBxSB744 -->
-      <div class="col-md-3 card container my-1" id="hangouts">
-        <h3 class="border rounded bg-dark text-center">What's Nearby</h3>
-        <div class="container nearbyIdeas"></div>
-      </div>
+    </div>
+    <div class="row justify-content-md-center">
+      <button id="submit" type="submit" class="btn btn-primary btn-lg rounded m-2">Submit</button>
     </div>
   </div>
-  <div class="p-5" id="weather placeholder"></div>
-  <footer class="fixed-bottom bg-dark p-4 text-center text-white">
-  </footer>
 
+
+  <div class="p-5" id="weather placeholder"></div>
+
+  <footer class="fixed-bottom bg-dark p-4 text-center text-white"></footer>
+  
   <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
