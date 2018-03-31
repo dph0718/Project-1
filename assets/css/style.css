@@ -19,34 +19,3 @@ body {
 .row {
     height: 100%;
 }
-
-#buttonArea {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 10%;
-}
-.pie-button {
-    background-image: url('../images/piecrust.png');
-    background-size: cover;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 5px outset silver;
-    padding: 14px;
-    margin: 20px;
-}
-.pie-button:hover {
-    background-blend-mode: darken;
-    background-color: rgb(192, 192, 192);
-}
-.pie-button:active {
-    background-image: url('../images/piecrust2.png');
-    border: 5px inset silver;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}

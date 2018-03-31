@@ -64,7 +64,7 @@ function changeForm() {
             <textarea class="form-control" id="event-members" rows="11"></textarea>
         </div>
         <button type="submit" class="btn btn-primary" id="add-member">Add Member</button>
-        <button type="submit" class="btn btn-primary" id="done">Done</button>
+        <a class="button btn btn-primary" href="badplaces.html">Done</a>
     `)
 }
 
@@ -94,13 +94,11 @@ function addEventMember(event) {
     });
 }
 
-function escapePage() {
-    window.location.href("index.html");
+function goToMap() {
+    window.location.href = "badplaces.html";
 }
 
 $("#create-event").on("click", addEvent);
 
 $("form").on("click", "#add-member", addEventMember);
-
-$("form").on("click", "#done", escapePage);
 
