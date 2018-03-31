@@ -81,6 +81,7 @@
 
         var map;
         var infowindow;
+        var apiKeyGeo = 'AIzaSyARO_JoPqv8FKwPbWWOk4HyvZaiVebWxPg';
 
         //all the stuff for getting central location & members' addresses ===========================
 
@@ -113,6 +114,27 @@
                 })
             })
         }
+
+        function geoCodeAddress(input, type) {
+            $.ajax({
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + input + '&key=' + apiKeyGeo,
+                method: 'GET'
+            }).then(function (resp) {
+                var latitude = resp.results[0].geometry.location.lat;
+                var longitude = resp.results[0].geometry.location.lng;
+                var coords = { lat: latitude, lng: longitude };
+                var marker = new google.maps.Marker({
+                    position: coords,
+                    map: map1,
+                    label: {
+                        fontFamily: 'londrina solid',
+                        text: type,
+                        fontSize: '16px',
+                    },
+                });
+            });
+        }
+
         function getSum(total, num) {
             return total + num;
         }
@@ -158,11 +180,28 @@
             openNow: true,
         };
 
+        var map1;
         function initialize() {
-            var map1 = new google.maps.Map(document.getElementById('map'), {
+            map1 = new google.maps.Map(document.getElementById('map'), {
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 center: centralLoc,
-                zoom: 10
+                zoom: 13
+            });
+            var pie = {
+                url: './images/pie.png',
+                anchor: new google.maps.Point(25, 25),
+                scaledSize: new google.maps.Size(50, 50, 'px', 'px'),
+            }
+            var marker = new google.maps.Marker({
+                position: centralLoc,
+                map: map1,
+                icon: pie,
+                label: {
+                    fontFamily: 'londrina solid',
+                    text: 'Gooey Center',
+                    fontSize: '20px',
+                    color: 'rebeccapurple',
+                }
             });
             infowindow = new google.maps.InfoWindow();
             var service = new google.maps.places.PlacesService(map1);
@@ -173,23 +212,6 @@
             service.nearbySearch(clubRequest, callback);
             service.nearbySearch(parkRequest, callback);
 
-            var pie = {
-                url: './images/pie.png',
-                anchor: new google.maps.Point(25, 25),
-                scaledSize: new google.maps.Size(50, 50, 'px', 'px'),
-            }
-
-            var marker = new google.maps.Marker({
-                position: centralLoc,
-                map: map,
-                icon: pie,
-                label: {
-                    fontFamily: 'londrina solid',
-                    text: 'Gooey Center',
-                    fontSize: '20px',
-                    color: 'rebeccapurple',
-                }
-            });
         }
         function Option(type, vicinity, name) {
             this.types = type;
@@ -200,7 +222,6 @@
         var establishments = [];
 
         function callback(results, status) {
-            console.log(results.length);
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
                     var option = new Option(results[i].types, results[i].vicinity, results[i].name);
@@ -233,30 +254,107 @@
 
         setTimeout(popButtons, 1000);
         function popButtons() {
-            console.log('Fuck me');
             for (var i = 0; i < establishments.length; i++) {
-                console.log('getting this far."');
                 for (var j = 0; j < types.length; j++) {
                     for (var k = 0; k < establishments[i].types.length; k++) {
                         if (establishments[i].types[k].includes(types[j])) {
                             var butType = window[types[j] + 'Button'];
-                            console.log("hello. there is a " + types[j] + " establishment within your meetpie area");
                             $("#buttonArea").append(butType);
                         } else {
-                            console.log('there is no ' + types[j] + 'here');
                         }
                     }
                 }
             }
         }
-        $(window).on('load', function(){
+
+        function initMap() {
+            var centralLoc = { lat: centralLat, lng: centralLng };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: centralLoc,
+                label: "Center",
+            });
+            var pie = {
+                url: './images/pie.png',
+                anchor: new google.maps.Point(25, 25),
+                scaledSize: new google.maps.Size(50, 50, 'px', 'px'),
+            }
+            var marker = new google.maps.Marker({
+                position: centralLoc,
+                map: map,
+                icon: pie,
+                label: {
+                    fontFamily: 'londrina solid',
+                    text: 'Gooey \t \t Center',
+                    fontSize: '20px',
+                    color: 'rebeccapurple',
+                }
+            });
+
+            for (var i = 0; i < geoCodeArray.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: { lat: geoCodeArray[i].latitude, lng: geoCodeArray[i].longitude },
+                    map: map,
+                    label: {
+                        fontFamily: 'londrina solid',
+                        text: geoCodeArray[i].displayName,
+                        fontSize: '16px',
+                    },
+                });
+            }
+        }
+
+        $(window).on('load', function () {
             $('#map').hide();
         });
         $(document).on('click', '.button', function () {
             $('#map').show();
-            console.log('piss');
+            document.querySelector('#map').scrollIntoView({
+                    behavior: 'smooth'
+                })
+
         });
 
+        function addressToCoords(type) {
+            for (var i = 0; i < establishments.length; i++) {
+                for (var k = 0; k < establishments[i].types.length; k++) {
+                    if (establishments[i].types[k].includes(type)) {
+                        geoCodeAddress(establishments[i].vicinity, establishments[i].name);
+                    }
+                }
+            }
+        }
+    /// This could be a little DRYer ============================
+        $(document).on('click', '#bar', function () {
+            console.log('bar clicked');
+            initialize();
+            addressToCoords('bar');
+        })
+        $(document).on('click', '#restaurant', function () {
+            console.log('restaurant clicked');
+            initialize();
+            addressToCoords('restaurant');
+        })
+        $(document).on('click', '#club', function () {
+            console.log('club clicked');
+            initialize();
+            addressToCoords('club');
+        })
+        $(document).on('click', '#park', function () {
+            console.log('park clicked');
+            initialize();
+            addressToCoords('park');
+        })
+        $(document).on('click', '#cafe', function () {
+            console.log('cafe clicked');
+            initialize();
+            addressToCoords('cafe');
+        })
+        $(document).on('click', '#movie', function () {
+            console.log('movie clicked');
+            initialize();
+            addressToCoords('movie');
+        })
     </script>
 
 </body>
