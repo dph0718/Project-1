@@ -73,20 +73,20 @@ function addEventMember(event) {
     userEmail = $("#member-email").val().trim();
     console.log(userEmail);
 
-    database.ref("users/").once("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
+    database.ref("users/").once("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
             console.log(childSnapshot);
             if (userEmail === childSnapshot.val().email) {
-                $("#event-members").val($("#event-members").val() + 
+                $("#event-members").val($("#event-members").val() +
                     userEmail + "\n");
 
                 database.ref("users/" + childSnapshot.key + "/events").update({
-                    [eventRef.key]: true 
+                    [eventRef.key]: true
                 });
                 database.ref("events/" + eventRef.key + "/users").update({
                     [childSnapshot.key]: true
                 });
-                $("#member-email").val("");                
+                $("#member-email").val("");
             } else {
                 console.log("user not found");
             }
@@ -95,7 +95,7 @@ function addEventMember(event) {
 }
 
 function escapePage() {
-    
+    window.location.href("index.html");
 }
 
 $("#create-event").on("click", addEvent);
