@@ -14,6 +14,13 @@
             margin: auto;
         }
 
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
         body {
             background-image: url('./images/pietable.png');
             background-size: cover;
@@ -52,16 +59,54 @@
             background-image: url('./images/piecrust2.png');
             border: 5px inset silver;
         }
+
+        #outtaHere {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            opacity: 0.3;
+        }
+
+        .text {
+            background-color: antiquewhite;
+            font-family: 'londrina solid';
+            font-size: 20px;
+            border: inset 4px tan;
+            border-radius: 30px;
+            padding: 15px;
+        }
+        .button {
+            background-image: url('./images/piecrust.png');
+            background-size: cover;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px outset silver;
+            padding: 14px;
+            margin: 20px;
+        }
+
+        .button:hover {
+            background-blend-mode: darken;
+            background-color: rgb(192, 192, 192);
+        }
+
+        .button:active {
+            background-image: url('./images/piecrust2.png');
+            border: 5px inset silver;
+        }
     </style>
 </head>
 
 <body>
     <form>
-        Your EVENT name:
-        <input type='text' id='eventName' placeholder='event name here' value='Drinks'>
-        <br> Who are you inviting?
+        <span class='text'> Your Event Name:</span>        <input type='text' id='eventName' placeholder='event name here' value='Drinks'>
+        <br><span class='text'> Who are you inviting?</span>
         <br>
-        <input type='text' id='member1' placeholder='friend' value='Timothy'>
+        <input type='text' id='member1' placeholder='friend'>
         <br>
         <input type='text' id='member2' placeholder='buddy'>
         <br>
@@ -71,17 +116,19 @@
         <br>
         <input type='text' id='member5' placeholder='confidant'>
         <br>
-        <input type='text' id='member6' placeholder='acquaintance' value='Frank'>
+        <input type='text' id='member6' placeholder='acquaintance'>
         <br>
         <input type='text' id='member7' placeholder='tag-along'>
         <br>
-        <button type='submit' id='submit'>Make your event exist!</button>
 
     </form>
 
     <div id='map'></div>
     <div id='map1'></div>
     <div id='buttonArea'></div>
+    <a href='./badplaces.html'>
+        <div id='outtaHere'></div>
+    </a>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -103,7 +150,8 @@
 
     <!-- JS for form submission -->
     <script>
-
+        var createButton = $("<img>").attr('src', './images/create.png').attr('class', 'button').attr('id', 'submit');
+        $('form').append(createButton);
         var db = firebase.database();
         var eventId;
 
@@ -161,7 +209,7 @@
             $("#buttonArea").hide();
         })
         //========All the things that happen when a user clicks submit======================================================
-        
+
         var cafeButton = $("<img>").attr('src', './images/coffee.png').attr('class', 'button').attr('id', 'cafe');
         var barButton = $("<img>").attr('src', './images/bar.png').attr('class', 'button').attr('id', 'bar');
         var parkButton = $("<img>").attr('src', './images/park.png').attr('class', 'button').attr('id', 'park');
@@ -198,7 +246,8 @@
             var eventName = $("#eventName").val().trim();
             var members = [];
             initMap();
-            initialize();
+            setTimeout(initialize, 500);
+            // initialize();
             setTimeout(popButtons, 1000);
 
 
@@ -254,9 +303,9 @@
             //create a map with users' location & central location
 
         })
-
+        var centralLoc;
         function initMap() {
-            var centralLoc = { lat: centralLat, lng: centralLng };
+            centralLoc = { lat: centralLat, lng: centralLng };
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 10,
                 center: centralLoc,
@@ -336,13 +385,13 @@
         };
 
         function initialize() {
-            var map1 = new google.maps.Map(document.getElementById('map1'), {
+            var map = new google.maps.Map(document.getElementById('map1'), {
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 center: centralLoc,
                 zoom: 10
             });
             infowindow = new google.maps.InfoWindow();
-            var service = new google.maps.places.PlacesService(map1);
+            var service = new google.maps.places.PlacesService(map);
             service.nearbySearch(barRequest, callback);
             service.nearbySearch(cafeRequest, callback);
             service.nearbySearch(restaurantRequest, callback);
@@ -380,6 +429,7 @@
                 infowindow.open(map, this);
             });
         }
+
 
     </script>
 
