@@ -38,47 +38,26 @@
 </head>
 
 <body class="background">
-    <div class="pos-f-t align-right" id="bottomSpace">
-        <div class="collapse" id="navbarToggleExternalContent">
-            <div class="bg-dark p-4 row">
-                <h4 class="text-white border rounded p-2">
-                    <a href="">Main Page</a>
-                </h4>
-                <h4 class="text-white ml-4 border rounded p-2">
-                    <a href="">Event Page</a>
-                </h4>
-                <h4 class="text-white ml-4 border rounded p-2">
-                    <a href="">User</a>
-                </h4>
-            </div>
-        </div>
-        <nav class="navbar navbar-dark bg-dark mb-5">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </nav>
-    </div>
     <div class="container">
         <div class="card m-4">
-            <div class="card-header text-center bg-info">
+            <div class="card-header bg-danger">
                 User Account
             </div>
-            <div id="user-info" class="card-body bg-secondary">
+            <div id="user-info" class="card-body">
                 <form>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Display Name</label>
+                            <label for="display-name">Display Name</label>
                             <input type="text" class="form-control" id="display-name">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4">Email</label>
+                            <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" readonly>
                         </div>
                     </div>
                     <fieldset>
                         <div class="form-group">
-                            <label for="address1">Address</label>
+                            <label for="address">Address</label>
                             <input type="text" class="form-control" id="address">
                         </div>
 
@@ -158,11 +137,6 @@
             </div>
         </div>
     </div>
-
-
-    <div class="p-5" id="weather placeholder"></div>
-
-    <footer class="fixed-bottom bg-dark p-4 text-center text-white"></footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
