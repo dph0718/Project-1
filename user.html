@@ -9,7 +9,7 @@
     <title>User Page</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
-  
+
     <link rel="stylesheet" href="assets/css/style.css">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -73,25 +73,13 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Email</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email" readonly>
                         </div>
-
                     </div>
-
                     <fieldset>
-
                         <div class="form-group">
                             <label for="address1">Address</label>
-                            <input type="text" class="form-control" id="address1">
-                        </div>
-                        <div class="form-group">
-                            <label for="address2">Address 2</label>
-                            <input type="text" class="form-control" id="address2">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="photo-url">Photo URL</label>
-                            <input type="text" class="form-control" id="photo-url">
+                            <input type="text" class="form-control" id="address">
                         </div>
 
                         <div class="form-row">
@@ -164,7 +152,7 @@
 
                             </div>
                     </fieldset>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="update-user">Update User</button>
                 </form>
                 </div>
             </div>
@@ -176,9 +164,6 @@
 
     <footer class="fixed-bottom bg-dark p-4 text-center text-white"></footer>
 
-    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
-
-    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -186,21 +171,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script type="text/javascript">
 
         var database = firebase.database();
-        var displayName = "n/a";
-        var email = "n/a";
-        var uid = "n/a";
+        var displayName = "";
+        var email = "";
+        var uid = "";
+        var userRef = "";
 
         function addUser() {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
 
                     if (user !== null) {
-                        var displayName = firebase.auth().currentUser.displayName;
-                        var email = firebase.auth().currentUser.email;
-                        var uid = firebase.auth().currentUser.uid;
+                        displayName = firebase.auth().currentUser.displayName;
+                        email = firebase.auth().currentUser.email;
+                        uid = firebase.auth().currentUser.uid;
+
+                        if (displayName === null) {
+                            displayName = "n/a";
+                        }
+                        if (email === null) {
+                            email = "n/a";
+                        }
 
                         var user = {
                             displayName: displayName,
@@ -208,7 +203,10 @@
                             uid: uid
                         };
 
-                        database.ref("users/").push(user);
+                        userRef = database.ref("users/").push(user);
+
+                        $("#display-name").val(displayName);
+                        $("#email").val(email);
                     }
                 } else {
                     console.log("not working");
@@ -218,7 +216,41 @@
             });
         };
 
+        function updateUser(event) {
+            event.preventDefault();
+
+            displayName = $("#display-name").val().trim();
+            address = $("#address").val().trim();
+            city = $("#city").val().trim();
+            state = $("#state").val().trim();
+            zipcode = $("#zipcode").val().trim();
+
+            if (displayName === null) {
+                console.log("All fields are required");
+            } else if (address === null) {
+                console.log("All fields are required");
+            } else if (city === null) {
+                console.log("All fields are required");
+            } else if (state === "N/A") {
+                console.log("All fields are required");
+            } else if (zipcode === null) {
+                console.log("All fields are required");
+            } else {
+
+                database.ref("users/" + userRef.key + "/location").update({
+                    displayName: displayName,
+                    address: address,
+                    city: city,
+                    state: state,
+                    zipcode: zipcode
+                });
+                window.location.replace("index.html");
+            }
+        }
+
         $(window).on("load", addUser);
+
+        $("#update-user").on("click", updateUser);
 
     </script>
 
