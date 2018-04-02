@@ -8,7 +8,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-database = firebase.database();
+var database = firebase.database();
 
 var eventName = "";
 var eventDate = "";
