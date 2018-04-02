@@ -11,16 +11,17 @@
 
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <script>
+        // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyAZVk8YI5PR8nfXyoSjvCbBTBB01_RhbTY",
-            authDomain: "meetpie-3c64a.firebaseapp.com",
-            databaseURL: "https://meetpie-3c64a.firebaseio.com",
-            projectId: "meetpie-3c64a",
-            storageBucket: "meetpie-3c64a.appspot.com",
-            messagingSenderId: "941417946944"
+          apiKey: "AIzaSyAZVk8YI5PR8nfXyoSjvCbBTBB01_RhbTY",
+          authDomain: "meetpie-3c64a.firebaseapp.com",
+          databaseURL: "https://meetpie-3c64a.firebaseio.com",
+          projectId: "meetpie-3c64a",
+          storageBucket: "meetpie-3c64a.appspot.com",
+          messagingSenderId: "941417946944"
         };
         firebase.initializeApp(config);
-    </script>
+      </script>
 
     <script src="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.css" />
@@ -60,26 +61,30 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script type="text/javascript">
+        var database = firebase.database();
+
         function initApp() {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
-                    uid = firebase.auth().currentUser.uid;
+                    var uid = firebase.auth().currentUser.uid;
                     database.ref("users/").once("value", function (snapshot) {
                         snapshot.forEach(function (childSnapshot) {
                             if (uid === childSnapshot.val().uid) {
                                 return;
                             } else {
-                                window.location.replace("http://localhost:8080/user.html");
+                                window.location.replace("https://tspatek.github.io/Project-1/user.html");
                             }
                         })
                     });
                 } else {
-                    window.location.replace("http://localhost:8080/login.html");
+                    window.location.replace("https://tspatek.github.io/Project-1/login.html");
                 }
             }, function (error) {
                 console.log(error);
             });
         };
+
+        initApp();
     </script>
 </body>
 

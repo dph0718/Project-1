@@ -16,7 +16,6 @@
 
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <script>
-        // Initialize Firebase
         var config = {
             apiKey: "AIzaSyAZVk8YI5PR8nfXyoSjvCbBTBB01_RhbTY",
             authDomain: "meetpie-3c64a.firebaseapp.com",
@@ -30,10 +29,6 @@
 
     <script src="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.css" />
-
-
-    <!-- <script src="assets/javascript/user.js"></script> -->
-
 
 </head>
 
@@ -240,7 +235,7 @@
             };
 
             userRef = database.ref("users/").push(user);
-            window.location.replace("http://localhost:8080/index.html");
+            window.location.replace("https://tspatek.github.io/Project-1/index.html");
         }
 
         function updateUser(event) {
@@ -273,7 +268,7 @@
                     state: state,
                     zipcode: zipcode
                 });
-                window.location.replace("http://localhost:8080/index.html");
+                window.location.replace("https://tspatek.github.io/Project-1/index.html");
             }
         }
 
