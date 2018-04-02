@@ -158,40 +158,42 @@
         function chooseForm() {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
-                    displayName = firebase.auth().currentUser.displayName;
-                    email = firebase.auth().currentUser.email;
-                    uid = firebase.auth().currentUser.uid;
+                    if (user !== null) {
+                        displayName = firebase.auth().currentUser.displayName;
+                        email = firebase.auth().currentUser.email;
+                        uid = firebase.auth().currentUser.uid;
 
-                    database.ref("users/").once("value", function (snapshot) {
-                        snapshot.forEach(function (childSnapshot) {
-                            if (uid === childSnapshot.val().uid) {
-                                userRef = childSnapshot;
+                        database.ref("users/").once("value", function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                if (uid === childSnapshot.val().uid) {
+                                    userRef = childSnapshot;
 
-                                $("user-info").append(`
-                                    <button type="submit" class="btn btn-primary" id="update-user">
-                                        Update User
-                                    </button>
-                                `);
+                                    $("user-info").append(`
+                                        <button type="submit" class="btn btn-primary" id="update-user">
+                                            Update User
+                                        </button>
+                                    `);
 
-                                $("#display-name").val(childSnapshot.val().displayName);
-                                $("#email").val(childSnapshot.val().email);
-                                $("#address").val(childSnapshot.val().address);
-                                $("#city").val(childSnapshot.val().city);
-                                $("#state").val(childSnapshot.val().state);
-                                $("#zipcode").val(childSnapshot.val().zipcode);
-                            }
-                            else {
-                                $("user-info").append(`
-                                    <button type="submit" class="btn btn-primary" id="create-user">
-                                        Create User
-                                    </button>
-                                `);
+                                    $("#display-name").val(childSnapshot.val().displayName);
+                                    $("#email").val(childSnapshot.val().email);
+                                    $("#address").val(childSnapshot.val().address);
+                                    $("#city").val(childSnapshot.val().city);
+                                    $("#state").val(childSnapshot.val().state);
+                                    $("#zipcode").val(childSnapshot.val().zipcode);
+                                }
+                                else {
+                                    $("user-info").append(`
+                                        <button type="submit" class="btn btn-primary" id="create-user">
+                                            Create User
+                                        </button>
+                                    `);
 
-                                $("#display-name").val(displayName);
-                                $("#email").val(email);
-                            }
-                        })
-                    });
+                                    $("#display-name").val(displayName);
+                                    $("#email").val(email);
+                                }
+                            })
+                        });
+                    }
                 } else {
                     console.log("Not logged in");
                 }
