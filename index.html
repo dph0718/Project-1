@@ -8,7 +8,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=IM+Fell+English+SC" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyAZVk8YI5PR8nfXyoSjvCbBTBB01_RhbTY",
+            authDomain: "meetpie-3c64a.firebaseapp.com",
+            databaseURL: "https://meetpie-3c64a.firebaseio.com",
+            projectId: "meetpie-3c64a",
+            storageBucket: "meetpie-3c64a.appspot.com",
+            messagingSenderId: "941417946944"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.3/firebaseui.css" />
 
     <title>MeetPie</title>
 </head>
@@ -30,9 +45,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <!-- map goes here -->
-                </div>
             </div>
 
         </div>
@@ -46,7 +58,29 @@
         crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="assets/javascript/app.js"></script>
+
+    <script type="text/javascript">
+        function initApp() {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    uid = firebase.auth().currentUser.uid;
+                    database.ref("users/").once("value", function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+                            if (uid === childSnapshot.val().uid) {
+                                return;
+                            } else {
+                                window.location.replace("http://localhost:8080/user.html");
+                            }
+                        })
+                    });
+                } else {
+                    window.location.replace("http://localhost:8080/login.html");
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
+    </script>
 </body>
 
 </html>
