@@ -34,11 +34,11 @@ function chooseForm() {
                             console.log(childSnapshot.val().uid);
                             userRef = childSnapshot;
 
-                            $("user-info").append(`
-                                        <button type="submit" class="btn btn-primary" id="update-user">
-                                            Update User
-                                        </button>
-                                    `);
+                            $("#user-info").append(`
+                                <button type="submit" class="btn btn-primary" id="update-user">
+                                    Update User
+                                </button>
+                            `);
 
                             $("#display-name").val(childSnapshot.val().displayName);
                             $("#email").val(childSnapshot.val().email);
@@ -48,11 +48,11 @@ function chooseForm() {
                             $("#zipcode").val(childSnapshot.val().zipcode);
                         }
                         else {
-                            $("user-info").append(`
-                                        <button type="submit" class="btn btn-primary" id="create-user">
-                                            Create User
-                                        </button>
-                                    `);
+                            $("#user-info").append(`
+                                <button type="submit" class="btn btn-primary" id="create-user">
+                                    Create User
+                                </button>
+                            `);
 
                             $("#display-name").val(displayName);
                             $("#email").val(email);
