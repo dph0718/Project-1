@@ -15,6 +15,7 @@ var eventDate = "";
 var eventTime = "";
 
 var eventRef = "";
+var isMember = false;
 
 var userEmail = "";
 
@@ -60,8 +61,17 @@ function changeForm() {
             <input type="email" class="form-control" id="member-email">
         </div>
         <div class="form-group">
-            <label for="event-members">Event Members</label>
-            <textarea class="form-control" id="event-members" rows="11"></textarea>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Display Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                 </thead>
+                 <tbody id="event-members>
+                 </tbody>
+            </table>   
         </div>
         <button type="submit" class="btn btn-primary" id="add-member">Add Member</button>
         <a class="button btn btn-primary" href="badplaces.html">Done</a>
@@ -71,21 +81,34 @@ function changeForm() {
 function addEventMember(event) {
     event.preventDefault();
     userEmail = $("#member-email").val().trim();
-    console.log(userEmail);
 
     database.ref("users/").once("value", function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
-            console.log(childSnapshot);
-            if (userEmail === childSnapshot.val().email) {
-                $("#event-members").val($("#event-members").val() +
-                    userEmail + "\n");
+            isMember = database.ref("events/" + eventRef.key + "users" + 
+                                    childSnapshot.key.val());
 
-                database.ref("users/" + childSnapshot.key + "/events").update({
-                    [eventRef.key]: true
-                });
-                database.ref("events/" + eventRef.key + "/users").update({
-                    [childSnapshot.key]: true
-                });
+            if (userEmail === childSnapshot.val().email) {
+                if (!isMember) {
+                    $("#event-members").append(`
+                    <tr id="${childSnapshot.key}">
+                        <td>${childSnapshot.val().displayName}</td>
+                        <td>${childSnapshot.val().email}</td>
+                        <td>
+                            <button type="submit" class="btn btn-danger remove-member" 
+                                data-key="${childSnapshot.key}">
+                                    Remove Member
+                            </button>
+                    </tr>
+                `);
+                    database.ref("users/" + childSnapshot.key + "/events").update({
+                        [eventRef.key]: true
+                    });
+                    database.ref("events/" + eventRef.key + "/users").update({
+                        [childSnapshot.key]: true
+                    });
+                } else {
+                    console.log("user is already a member of this event");
+                }
                 $("#member-email").val("");
             } else {
                 console.log("user not found");
@@ -94,11 +117,21 @@ function addEventMember(event) {
     });
 }
 
-function goToMap() {
-    window.location.href = "badplaces.html";
+function removeEventMember() {
+    var removedMember = $(this).attr("data-key");
+    $(`#${removedMember}`).detach();
+
+    database.ref("users/" + removedMember + "/events").update({
+        [eventRef.key]: false
+    });
+    database.ref("events/" + eventRef.key + "/users").update({
+        [removedMember]: false
+    });
 }
 
 $("#create-event").on("click", addEvent);
 
 $("form").on("click", "#add-member", addEventMember);
+
+$("table").on("click", ".remove-member", removeEventMember);
 
