@@ -166,6 +166,8 @@
                         database.ref("users/").once("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (uid === childSnapshot.val().uid) {
+                                    console.log(uid);
+                                    console.log(childSnapshot.val().uid);
                                     userRef = childSnapshot;
 
                                     $("user-info").append(`
@@ -196,6 +198,7 @@
                     }
                 } else {
                     console.log("Not logged in");
+                    window.location.replace("https://tspatek.github.io/Project-1/login.html");
                 }
             }), function (error) {
                 console.log(error);
